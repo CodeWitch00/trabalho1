@@ -4,6 +4,7 @@
 **Atividade:** GUI Semâtica , Responsiva e Acessível para Front-End web
 **Aluna:** Rayana Santos
 **Professor:** Vander Elme
+**GitHub:** 
 
 
 ## 1. Introdução
@@ -52,4 +53,4 @@ HTML, CSS e JavaScript foram mantidos em arquivos separados. O CSS utiliza custo
 
 ## 6. Conclusão
 
-A solução atualizada atende perfeitamente a todos os requisitos: apresenta as fichas empilhadas verticalmente (uma embaixo da outra), alterna a exibição para apresentar apenas a ficha selecionada ao clicar no botão correspondente, e destaca os botões de navegação com cores bem diferenciadas em relação à barra. Além disso, o relatório acadêmico foi atualizado integralmente, mantendo a proposta de um front-end HTML5/CSS3 semântico, acessível e responsivo: "um básico bem feito".
+A interface desenvolvida atende aos objetivos da atividade: utiliza HTML5 semântico de forma consistente, aplica boas práticas de acessibilidade, é responsiva do celular ao monitor grande, oferece tema claro e escuro, e mantém o JavaScript em papel estritamente complementar (cadastro, busca e alternância de tema, sem backend, login ou API). A organização visual em três fichas facilita a compreensão da interface sem recorrer a componentes complexos como abas ARIA, o que manteve o projeto simples de defender academicamente e alinhado à proposta de demonstrar domínio de HTML5 e CSS3 na construção de interfaces web.
