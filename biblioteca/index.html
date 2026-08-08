@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Biblioteca</title>
+    <meta name="description" content="Interface para cadastro, busca e visualização de livros de um acervo de biblioteca.">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo principal</a>
+
+    <header class="site-header">
+        <div class="site-header__identidade">
+            <p class="site-header__eyebrow">Biblioteca Municipal Boa Leitura</p>
+            <h1>Sistema de Gestão de Biblioteca</h1>
+        </div>
+        <div class="site-header__acoes">
+            <button type="button" id="alternar-tema" class="botao-tema" aria-pressed="false">
+                <span class="botao-tema__icone" aria-hidden="true">🌙</span>
+                <span class="botao-tema__texto">Tema escuro</span>
+            </button>
+        </div>
+    </header>
+
+    <nav class="site-nav" aria-label="Navegação principal">
+        <ul class="nav-lista" role="tablist">
+            <li role="presentation"><button type="button" class="nav-btn active" data-target="cadastro" id="tab-cadastro" role="tab" aria-selected="true" aria-controls="cadastro">Ficha 1: Cadastro</button></li>
+            <li role="presentation"><button type="button" class="nav-btn" data-target="acervo" id="tab-acervo" role="tab" aria-selected="false" aria-controls="acervo">Ficha 2: Acervo</button></li>
+            <li role="presentation"><button type="button" class="nav-btn" data-target="resumo" id="tab-resumo" role="tab" aria-selected="false" aria-controls="resumo">Ficha 3: Resumo</button></li>
+            <li role="presentation"><button type="button" class="nav-btn nav-btn--todas" data-target="todas" id="tab-todas" role="tab" aria-selected="false">Exibir Todas</button></li>
+        </ul>
+    </nav>
+
+    <main id="conteudo-principal">
+
+        <div class="main-fichas">
+
+            <section id="cadastro" class="ficha card" aria-labelledby="cadastro-titulo" role="tabpanel" tabindex="0">
+                <div class="ficha-header">
+                    <span class="ficha-tag">Ficha 1</span>
+                    <h2 id="cadastro-titulo">Cadastro de livro</h2>
+                    <p class="ficha-subtitulo">Registre uma nova obra no acervo</p>
+                </div>
+
+                <p class="nota-obrigatorio"><span class="asterisco-obrigatorio" aria-hidden="true">*</span> Campo obrigatório</p>
+
+                <form id="form-cadastro">
+
+                    <fieldset>
+                        <legend>Dados da obra</legend>
+
+                        <div class="form-field">
+                            <label for="titulo">Título <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <input type="text" id="titulo" name="titulo" required placeholder="Ex: Dom Casmurro">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="autor">Autor(a) <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <input type="text" id="autor" name="autor" required placeholder="Ex: Machado de Assis">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="categoria">Categoria <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <select id="categoria" name="categoria" required>
+                                <option value="" disabled selected>Ex: Selecione uma categoria</option>
+                                <option value="Literatura">Literatura</option>
+                                <option value="Romance">Romance</option>
+                                <option value="Ficção">Ficção</option>
+                                <option value="Fantasia">Fantasia</option>
+                                <option value="História">História</option>
+                                <option value="Filosofia">Filosofia</option>
+                                <option value="Psicologia">Psicologia</option>
+                                <option value="Ciência">Ciência</option>
+                                <option value="Tecnologia">Tecnologia</option>
+                                <option value="Educação">Educação</option>
+                                <option value="Administração">Administração</option>
+                                <option value="Direito">Direito</option>
+                                <option value="Biografia">Biografia</option>
+                                <option value="Poesia">Poesia</option>
+                                <option value="Infantil">Infantil</option>
+                                <option value="Juvenil">Juvenil</option>
+                                <option value="Ciências Sociais">Ciências Sociais</option>
+                                <option value="Artes">Artes</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="isbn">ISBN</label>
+                            <input type="text" id="isbn" name="isbn" placeholder="Ex: 978-85-359-0277-8">
+                        </div>
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Disponibilidade</legend>
+
+                        <div class="form-field">
+                            <label for="ano">Ano de publicação <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <input type="number" id="ano" name="ano" min="1500" max="2100" required placeholder="Ex: 1899">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="exemplares">Quantidade de exemplares <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <input type="number" id="exemplares" name="exemplares" min="0" required placeholder="Ex: 3">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="status">Status <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <select id="status" name="status" required>
+                                <option value="Disponível">Disponível</option>
+                                <option value="Emprestado">Emprestado</option>
+                                <option value="Reservado">Reservado</option>
+                            </select>
+                        </div>
+
+                    </fieldset>
+
+                    <p id="form-feedback" class="feedback" role="status" aria-live="polite"></p>
+
+                    <div class="form-actions">
+                        <button type="submit">Cadastrar livro</button>
+                        <button type="reset">Limpar formulário</button>
+                    </div>
+
+                </form>
+            </section>
+
+            <section id="acervo" class="ficha card" aria-labelledby="acervo-titulo" role="tabpanel" tabindex="0">
+                <div class="ficha-header">
+                    <span class="ficha-tag">Ficha 2</span>
+                    <h2 id="acervo-titulo">Acervo cadastrado</h2>
+                    <p class="ficha-subtitulo">Consulte e localize as obras disponíveis na biblioteca.</p>
+                </div>
+
+                <div class="busca">
+                    <label for="campo-busca">Pesquisar no acervo</label>
+                    <div class="busca__controles">
+                        <input type="search" id="campo-busca" name="busca" placeholder="Ex: Dom Casmurro, Machado de Assis, Literatura...">
+                        <button type="button" id="limpar-busca">Limpar busca</button>
+                    </div>
+                </div>
+
+                <p id="contador-resultados" class="feedback" role="status" aria-live="polite">15 livros encontrados.</p>
+
+                <div class="table-scroll">
+                    <table>
+                        <caption>Lista de livros cadastrados</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Título</th>
+                                <th scope="col">Autor(a)</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Ano</th>
+                                <th scope="col">Exemplares</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-acervo">
+                            <tr data-status="Disponível">
+                                <td data-label="Título">Dom Casmurro</td>
+                                <td data-label="Autor(a)">Machado de Assis</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1899</td>
+                                <td data-label="Exemplares">4</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Emprestado">
+                                <td data-label="Título">O Cortiço</td>
+                                <td data-label="Autor(a)">Aluísio Azevedo</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1890</td>
+                                <td data-label="Exemplares">3</td>
+                                <td data-label="Status"><span class="status status--emprestado">Emprestado</span></td>
+                            </tr>
+                            <tr data-status="Reservado">
+                                <td data-label="Título">A Hora da Estrela</td>
+                                <td data-label="Autor(a)">Clarice Lispector</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1977</td>
+                                <td data-label="Exemplares">2</td>
+                                <td data-label="Status"><span class="status status--reservado">Reservado</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">Memórias Póstumas de Brás Cubas</td>
+                                <td data-label="Autor(a)">Machado de Assis</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1881</td>
+                                <td data-label="Exemplares">3</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Emprestado">
+                                <td data-label="Título">Grande Sertão: Veredas</td>
+                                <td data-label="Autor(a)">Guimarães Rosa</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1956</td>
+                                <td data-label="Exemplares">2</td>
+                                <td data-label="Status"><span class="status status--emprestado">Emprestado</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">1984</td>
+                                <td data-label="Autor(a)">George Orwell</td>
+                                <td data-label="Categoria">Ficção</td>
+                                <td data-label="Ano">1949</td>
+                                <td data-label="Exemplares">5</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">O Hobbit</td>
+                                <td data-label="Autor(a)">J.R.R. Tolkien</td>
+                                <td data-label="Categoria">Fantasia</td>
+                                <td data-label="Ano">1937</td>
+                                <td data-label="Exemplares">4</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">O Pequeno Príncipe</td>
+                                <td data-label="Autor(a)">Antoine de Saint-Exupéry</td>
+                                <td data-label="Categoria">Infantil</td>
+                                <td data-label="Ano">1943</td>
+                                <td data-label="Exemplares">6</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Emprestado">
+                                <td data-label="Título">Sapiens</td>
+                                <td data-label="Autor(a)">Yuval Noah Harari</td>
+                                <td data-label="Categoria">Ciências Sociais</td>
+                                <td data-label="Ano">2011</td>
+                                <td data-label="Exemplares">3</td>
+                                <td data-label="Status"><span class="status status--emprestado">Emprestado</span></td>
+                            </tr>
+                            <tr data-status="Reservado">
+                                <td data-label="Título">Clean Code</td>
+                                <td data-label="Autor(a)">Robert C. Martin</td>
+                                <td data-label="Categoria">Tecnologia</td>
+                                <td data-label="Ano">2008</td>
+                                <td data-label="Exemplares">2</td>
+                                <td data-label="Status"><span class="status status--reservado">Reservado</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">O Mundo de Sofia</td>
+                                <td data-label="Autor(a)">Jostein Gaarder</td>
+                                <td data-label="Categoria">Filosofia</td>
+                                <td data-label="Ano">1991</td>
+                                <td data-label="Exemplares">3</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">Uma Breve História do Tempo</td>
+                                <td data-label="Autor(a)">Stephen Hawking</td>
+                                <td data-label="Categoria">Ciência</td>
+                                <td data-label="Ano">1988</td>
+                                <td data-label="Exemplares">2</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Emprestado">
+                                <td data-label="Título">Vidas Secas</td>
+                                <td data-label="Autor(a)">Graciliano Ramos</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1938</td>
+                                <td data-label="Exemplares">3</td>
+                                <td data-label="Status"><span class="status status--emprestado">Emprestado</span></td>
+                            </tr>
+                            <tr data-status="Disponível">
+                                <td data-label="Título">Admirável Mundo Novo</td>
+                                <td data-label="Autor(a)">Aldous Huxley</td>
+                                <td data-label="Categoria">Ficção</td>
+                                <td data-label="Ano">1932</td>
+                                <td data-label="Exemplares">2</td>
+                                <td data-label="Status"><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="Reservado">
+                                <td data-label="Título">Capitães da Areia</td>
+                                <td data-label="Autor(a)">Jorge Amado</td>
+                                <td data-label="Categoria">Literatura</td>
+                                <td data-label="Ano">1937</td>
+                                <td data-label="Exemplares">3</td>
+                                <td data-label="Status"><span class="status status--reservado">Reservado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p id="sem-resultados" class="sem-resultados" hidden>Nenhum livro encontrado.<br>Tente utilizar outro título, autor(a) ou categoria.</p>
+            </section>
+
+            <aside id="resumo" class="ficha card" aria-labelledby="resumo-titulo" role="tabpanel" tabindex="0">
+                <div class="ficha-header">
+                    <span class="ficha-tag">Ficha 3</span>
+                    <h2 id="resumo-titulo">Resumo do acervo</h2>
+                    <p class="ficha-subtitulo">Visão geral da coleção cadastrada.</p>
+                </div>
+
+                <dl class="resumo-lista" id="resumo-lista">
+                    <div class="resumo-item">
+                        <dt>Total de livros</dt>
+                        <dd id="resumo-total">15</dd>
+                    </div>
+                    <div class="resumo-item">
+                        <dt>Livros disponíveis</dt>
+                        <dd id="resumo-disponiveis">8</dd>
+                    </div>
+                    <div class="resumo-item">
+                        <dt>Livros emprestados</dt>
+                        <dd id="resumo-emprestados">4</dd>
+                    </div>
+                    <div class="resumo-item">
+                        <dt>Livros reservados</dt>
+                        <dd id="resumo-reservados">3</dd>
+                    </div>
+                    <div class="resumo-item">
+                        <dt>Categorias</dt>
+                        <dd id="resumo-categorias">8</dd>
+                    </div>
+                    <div class="resumo-item">
+                        <dt>Autores(as)</dt>
+                        <dd id="resumo-autores">14</dd>
+                    </div>
+                </dl>
+
+                <p class="resumo-nota">Os indicadores acima representam o acervo total e são atualizados dinamicamente conforme novos registros são cadastrados.</p>
+            </aside>
+
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>Sistema de Gestão de Biblioteca: Trabalho acadêmico desenvolvido com HTML5 e CSS3.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

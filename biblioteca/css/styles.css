@@ -1,0 +1,747 @@
+/* ==========================================================================
+   1. VARIÁVEIS DE TEMA (Paleta Vintage Moderna: Bege, Azul, Vermelho)
+   ========================================================================== */
+
+:root {
+    /* Tema claro: Vintage Moderno */
+    --color-background: #f4efe6;       /* Bege pergaminho elegante */
+    --color-surface: #faf7f0;          /* Bege papel linho para os cartões */
+    --color-surface-alt: #eae3d2;      /* Bege suave para inputs e destaques */
+    --color-text: #2c2825;             /* Grafite profundo para alta legibilidade */
+    --color-text-muted: #685e54;       /* Tom marrom suave para textos secundários */
+    
+    --color-primary: #1f3a52;          /* Azul Vintage / Slate Navy */
+    --color-primary-dark: #132636;     /* Azul Profundo */
+    --color-accent: #2b5b84;           /* Azul Secundário */
+    --color-red: #c0392b;              /* Vermelho Vintage / Terracota (Asteriscos e Destaques) */
+    
+    --color-border: #d5c8b5;           /* Borda Bege Pergaminho */
+    
+    --color-success: #2d6a4f;          /* Verde Vintage */
+    --color-success-bg: #e2ece9;
+    --color-warning: #b5651d;          /* Âmbar Vintage */
+    --color-warning-bg: #f8efe4;
+    --color-danger: #c0392b;           /* Vermelho Vintage */
+    --color-danger-bg: #f9e8e6;
+    --color-focus: #2b5b84;            /* Foco Azul */
+
+    --font-heading: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    --font-body: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
+
+    --radius: 6px;
+    --max-width: 1200px;
+}
+
+[data-theme="dark"] {
+    /* Tema escuro: Vintage Noturno */
+    --color-background: #141d26;       /* Azul Escuro Noturno */
+    --color-surface: #1c2734;          /* Card Azul Muted */
+    --color-surface-alt: #253446;      /* Input e Surface Alt */
+    --color-text: #eae4d8;             /* Bege claro de leitura */
+    --color-text-muted: #9aa8b6;       /* Muted azulado */
+    
+    --color-primary: #4b7bec;          /* Azul suave destaque */
+    --color-primary-dark: #709df7;
+    --color-accent: #3867d6;
+    --color-red: #e74c3c;              /* Vermelho vivo noturno */
+    
+    --color-border: #2e3e50;
+    
+    --color-success: #2ed573;
+    --color-success-bg: #1e382b;
+    --color-warning: #ffa502;
+    --color-warning-bg: #3d301b;
+    --color-danger: #ff6b6b;
+    --color-danger-bg: #3d2023;
+    --color-focus: #709df7;
+}
+
+/* ==========================================================================
+   2. RESET / BASE
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ==========================================================================
+   3. TIPOGRAFIA
+   ========================================================================== */
+
+body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+h1,
+h2 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    line-height: 1.25;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2 {
+    color: var(--color-text);
+}
+
+h1 {
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    margin: 0;
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-xs) 0;
+}
+
+p {
+    margin: 0 0 var(--space-sm) 0;
+}
+
+/* Asterisco de campo obrigatório em vermelho */
+.asterisco-obrigatorio {
+    color: var(--color-red);
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+/* ==========================================================================
+   4. ESTRUTURA / LAYOUT (Fichas empilhadas)
+   ========================================================================== */
+
+.site-header,
+.site-nav,
+main,
+.site-footer {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+}
+
+main {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-xl);
+}
+
+/* Layout empilhado: uma ficha embaixo da outra */
+.main-fichas {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Estilo limpo para as Fichas */
+.ficha {
+    position: relative;
+    border-top: 4px solid var(--color-primary);
+}
+
+.ficha[hidden],
+.ficha.ficha--oculta {
+    display: none !important;
+}
+
+.ficha-header {
+    margin-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-sm);
+}
+
+.ficha-tag {
+    display: inline-block;
+    margin: 0 0 var(--space-xs) 0;
+    padding: 3px var(--space-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: var(--color-primary);
+    border-radius: 4px;
+}
+
+.ficha-subtitulo {
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: 0;
+    font-size: 0.92rem;
+}
+
+/* ==========================================================================
+   5. HEADER
+   ========================================================================== */
+
+.site-header {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-md);
+    border-bottom: 3px double var(--color-border);
+}
+
+.site-header__eyebrow {
+    margin: 0 0 var(--space-xs) 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-red);
+    font-weight: 700;
+}
+
+.botao-tema {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-xs) var(--space-md);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+}
+
+.botao-tema:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-accent);
+}
+
+.botao-tema__icone {
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   6. NAVEGAÇÃO DE FICHAS (Botões com cor diferente da barra)
+   ========================================================================== */
+
+.site-nav {
+    background-color: var(--color-primary); /* Barra Azul Slate Vintage */
+    padding: var(--space-sm) var(--space-md);
+    border-radius: 0 0 var(--radius) var(--radius);
+    border-top: 2px solid var(--color-accent);
+}
+
+.nav-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+/* Botões de navegação com cor bem diferente da barra */
+.nav-btn {
+    background-color: var(--color-surface); /* Bege Claro destacado da barra azul */
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    padding: var(--space-xs) var(--space-md);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.nav-btn:hover,
+.nav-btn:focus {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-accent);
+    color: var(--color-primary-dark);
+}
+
+/* Botão selecionado com destaque em Vermelho Vintage Terracota */
+.nav-btn.active {
+    background-color: var(--color-red);
+    color: #ffffff;
+    border-color: #a0281e;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(192, 57, 43, 0.35);
+}
+
+.nav-btn--todas {
+    margin-left: auto;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #f4efe6;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+}
+
+.nav-btn--todas:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+.nav-btn--todas.active {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    border-style: solid;
+    border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .nav-btn {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+[data-theme="dark"] .nav-btn:hover {
+    background-color: var(--color-surface-alt);
+}
+
+[data-theme="dark"] .nav-btn.active {
+    background-color: var(--color-red);
+    color: #ffffff;
+    border-color: var(--color-red);
+}
+
+/* ==========================================================================
+   7. FORMULÁRIO
+   ========================================================================== */
+
+.nota-obrigatorio {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+}
+
+fieldset {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    margin: 0 0 var(--space-md) 0;
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+legend {
+    font-family: var(--font-heading);
+    font-weight: bold;
+    color: var(--color-primary);
+    padding: 0 var(--space-xs);
+    font-size: 1rem;
+}
+
+[data-theme="dark"] legend {
+    color: var(--color-text);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
+.form-field:last-child {
+    margin-bottom: 0;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+input,
+select {
+    font: inherit;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-surface-alt);
+    color: var(--color-text);
+    width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Placeholders de exemplo dentro do campo de preenchimento */
+input::placeholder,
+select:invalid {
+    color: var(--color-text-muted);
+    opacity: 0.75;
+    font-style: italic;
+    font-size: 0.88rem;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px rgba(43, 91, 132, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+.feedback {
+    min-height: 1.4em;
+    font-weight: 600;
+    color: var(--color-success);
+}
+
+.feedback[data-state="erro"] {
+    color: var(--color-danger);
+}
+
+/* ==========================================================================
+   8. BOTÕES
+   ========================================================================== */
+
+button {
+    font: inherit;
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button[type="submit"] {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-primary-dark);
+}
+
+button[type="reset"],
+#limpar-busca {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+button[type="reset"]:hover,
+#limpar-busca:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   9. BUSCA
+   ========================================================================== */
+
+.busca {
+    margin-bottom: var(--space-md);
+}
+
+.busca label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: var(--space-xs);
+}
+
+.busca__controles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.busca__controles input[type="search"] {
+    flex: 1 1 220px;
+}
+
+.sem-resultados {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* ==========================================================================
+   10. TABELA
+   ========================================================================== */
+
+.table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+caption {
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+th,
+td {
+    text-align: left;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+thead th {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: var(--color-surface-alt);
+}
+
+tbody tr[hidden] {
+    display: none;
+}
+
+.status {
+    display: inline-block;
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.status--disponivel {
+    color: var(--color-success);
+    background-color: var(--color-success-bg);
+    border-color: var(--color-success);
+}
+
+.status--emprestado {
+    color: var(--color-warning);
+    background-color: var(--color-warning-bg);
+    border-color: var(--color-warning);
+}
+
+.status--reservado {
+    color: var(--color-danger);
+    background-color: var(--color-danger-bg);
+    border-color: var(--color-danger);
+}
+
+/* ==========================================================================
+   11. RESUMO (Ficha 3)
+   ========================================================================== */
+
+.resumo-lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin: 0 0 var(--space-md) 0;
+}
+
+.resumo-item {
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: var(--space-sm);
+}
+
+.resumo-item dt {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+}
+
+.resumo-item dd {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+}
+
+[data-theme="dark"] .resumo-item dd {
+    color: var(--color-red);
+}
+
+.resumo-nota {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* ==========================================================================
+   12. FOOTER
+   ========================================================================== */
+
+.site-footer {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+/* ==========================================================================
+   13. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (min-width: 480px) {
+    .resumo-lista {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* Tablets */
+@media (min-width: 600px) {
+    .form-field {
+        display: grid;
+        grid-template-columns: 190px 1fr;
+        align-items: center;
+    }
+
+    .form-field label {
+        padding-top: 0;
+    }
+}
+
+/* Tela grande */
+@media (min-width: 900px) {
+    .resumo-lista {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* Tabela em formato de cartão para telas muito pequenas */
+@media (max-width: 480px) {
+    .nav-btn--todas {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #acervo thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    #acervo table,
+    #acervo tbody,
+    #acervo tr,
+    #acervo td {
+        display: block;
+        width: 100%;
+    }
+
+    #acervo tr {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        margin-bottom: var(--space-md);
+        padding: var(--space-sm);
+    }
+
+    #acervo td {
+        border-bottom: none;
+        padding: var(--space-xs) 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    #acervo td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--color-text-muted);
+    }
+}
+
+/* ==========================================================================
+   14. ACESSIBILIDADE
+   ========================================================================== */
+
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: auto;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    padding: var(--space-sm) var(--space-md);
+    z-index: 100;
+    border-radius: var(--radius);
+}
+
+.skip-link:focus {
+    left: var(--space-md);
+    top: var(--space-md);
+    position: fixed;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    body {
+        transition: none;
+    }
+}
