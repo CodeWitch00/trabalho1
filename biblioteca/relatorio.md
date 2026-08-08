@@ -4,7 +4,7 @@
 **Atividade:** GUI Semâtica , Responsiva e Acessível para Front-End web
 **Aluna:** Rayana Santos
 **Professor:** Vander Elme
-**GitHub:** 
+**GitHub:** https://github.com/CodeWitch00/trabalho1.git
 
 
 ## 1. Introdução
