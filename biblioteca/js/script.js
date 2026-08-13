@@ -25,8 +25,14 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', function (evento) {
             evento.preventDefault();
 
-            if (!form.checkValidity()) {
-                form.reportValidity();
+            var valido = window.Validacao
+                ? window.Validacao.validarFormularioLivro(form)
+                : form.checkValidity();
+
+            if (!valido) {
+                if (!window.Validacao) {
+                    form.reportValidity();
+                }
                 mostrarFeedback(formFeedback, 'Preencha todos os campos obrigatórios antes de cadastrar.', 'erro');
                 return;
             }
@@ -230,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Detectar hash na URL (ex: #acervo) se houver
     var hash = window.location.hash.replace('#', '');
-    if (hash && (hash === 'cadastro' || hash === 'acervo' || hash === 'resumo')) {
+    if (hash && (hash === 'cadastro' || hash === 'acervo' || hash === 'leitor' || hash === 'resumo')) {
         exibirFicha(hash);
     } else {
         // Exibe apenas a Ficha 1 por padrão

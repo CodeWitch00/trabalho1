@@ -745,3 +745,21 @@ select:focus-visible {
         transition: none;
     }
 }
+
+/* Estilos de Validação da Ficha de Leitor e Livros */
+.form-field.invalido label {
+    color: var(--color-red, var(--color-danger));
+}
+
+.form-field.invalido input,
+.form-field.invalido select {
+    border-color: var(--color-danger) !important;
+    background-color: var(--color-danger-bg) !important;
+}
+
+.erro-campo {
+    color: var(--color-danger);
+    font-size: 0.82rem;
+    margin-top: 4px;
+    font-weight: 600;
+}

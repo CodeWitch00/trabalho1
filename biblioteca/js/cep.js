@@ -20,7 +20,7 @@
 (function () {
     'use strict';
 
-    var ENDPOINT_VIACEP = 'https://viacep.com.br/ws/01001000/json/';
+    var ENDPOINT_VIACEP = 'https://viacep.com.br/ws/';
 
     /* ---------------------------------------------------------------
        Utilitários
