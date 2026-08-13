@@ -28,7 +28,8 @@
         <ul class="nav-lista" role="tablist">
             <li role="presentation"><button type="button" class="nav-btn active" data-target="cadastro" id="tab-cadastro" role="tab" aria-selected="true" aria-controls="cadastro">Ficha 1: Cadastro</button></li>
             <li role="presentation"><button type="button" class="nav-btn" data-target="acervo" id="tab-acervo" role="tab" aria-selected="false" aria-controls="acervo">Ficha 2: Acervo</button></li>
-            <li role="presentation"><button type="button" class="nav-btn" data-target="resumo" id="tab-resumo" role="tab" aria-selected="false" aria-controls="resumo">Ficha 3: Resumo</button></li>
+            <li role="presentation"><button type="button" class="nav-btn" data-target="leitor" id="tab-leitor" role="tab" aria-selected="false" aria-controls="leitor">Ficha 3: Leitor</button></li>
+            <li role="presentation"><button type="button" class="nav-btn" data-target="resumo" id="tab-resumo" role="tab" aria-selected="false" aria-controls="resumo">Ficha 4: Resumo</button></li>
             <li role="presentation"><button type="button" class="nav-btn nav-btn--todas" data-target="todas" id="tab-todas" role="tab" aria-selected="false">Exibir Todas</button></li>
         </ul>
     </nav>
@@ -102,7 +103,7 @@
                         </div>
 
                         <div class="form-field">
-                            <label for="exemplares">Quantidade de exemplares <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <label for="exemplares">Quantidade de exemplares<span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
                             <input type="number" id="exemplares" name="exemplares" min="0" required placeholder="Ex: 3">
                         </div>
 
@@ -285,9 +286,110 @@
                 <p id="sem-resultados" class="sem-resultados" hidden>Nenhum livro encontrado.<br>Tente utilizar outro título, autor(a) ou categoria.</p>
             </section>
 
+            <section id="leitor" class="ficha card" aria-labelledby="leitor-titulo">
+                <p class="ficha-tag">Ficha 3</p>
+                <h2 id="leitor-titulo">Cadastro de leitor(a)</h2>
+                <p class="ficha-subtitulo">Registre um(a) novo(a) leitor(a) da biblioteca</p>
+
+
+                <form id="form-leitor">
+
+                    <fieldset>
+                        <legend>Dados pessoais</legend>
+
+                        <div class="form-field">
+                            <label for="leitor-nome">Nome completo <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <input type="text" id="leitor-nome" name="nome" required aria-describedby="leitor-nome-erro">
+                            <p id="leitor-nome-erro" class="erro-campo" aria-live="polite"></p>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="leitor-email">E-mail <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <input type="email" id="leitor-email" name="email" required aria-describedby="leitor-email-dica leitor-email-erro" placeholder="Ex: ana.souza@example.com">
+                            <p id="leitor-email-erro" class="erro-campo" aria-live="polite"></p>
+                        </div>
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Endereço</legend>
+
+                        <div class="form-field">
+                            <label for="leitor-cep">CEP <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
+                            <div class="cep-controles">
+                                <input type="text" id="leitor-cep" name="cep" inputmode="numeric" placeholder="00000-000" required aria-describedby="leitor-cep-dica leitor-cep-erro">
+                                <button type="button" id="buscar-cep">Buscar endereço</button>
+                            </div>
+                            <p id="leitor-cep-erro" class="erro-campo" aria-live="polite"></p>
+                        </div>
+
+                        <p id="cep-status" class="feedback" role="status" aria-live="polite"></p>
+
+                        <div class="form-field">
+                            <label for="leitor-logradouro">Endereço (rua/avenida)</label>
+                            <input type="text" id="leitor-logradouro" name="logradouro" aria-describedby="leitor-logradouro-dica">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="leitor-numero">Número</label>
+                            <input type="text" id="leitor-numero" name="numero">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="leitor-bairro">Bairro</label>
+                            <input type="text" id="leitor-bairro" name="bairro">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="leitor-cidade">Cidade</label>
+                            <input type="text" id="leitor-cidade" name="cidade">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="leitor-uf">Estado (UF)</label>
+                            <input type="text" id="leitor-uf" name="uf" maxlength="2">
+                        </div>
+
+                    </fieldset>
+
+                    <p id="leitor-feedback" class="feedback" role="status" aria-live="polite"></p>
+
+                    <div class="form-actions">
+                        <button type="submit">Cadastrar leitor(a)</button>
+                        <button type="reset">Limpar formulário</button>
+                    </div>
+
+                </form>
+
+                <div class="table-scroll">
+                    <table>
+                        <caption>Lista de leitores cadastrados</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Cidade/UF</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-leitores">
+                            <tr>
+                                <td data-label="Nome">Ana Beatriz Souza</td>
+                                <td data-label="E-mail">ana.souza@example.com</td>
+                                <td data-label="Cidade/UF">Osasco/SP</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Nome">Carlos Eduardo Lima</td>
+                                <td data-label="E-mail">carlos.lima@example.com</td>
+                                <td data-label="Cidade/UF">Curitiba/PR</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
             <aside id="resumo" class="ficha card" aria-labelledby="resumo-titulo" role="tabpanel" tabindex="0">
                 <div class="ficha-header">
-                    <span class="ficha-tag">Ficha 3</span>
+                    <span class="ficha-tag">Ficha 4</span>
                     <h2 id="resumo-titulo">Resumo do acervo</h2>
                 </div>
 

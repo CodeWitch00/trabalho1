@@ -2,7 +2,8 @@
  * script.js
  * JavaScript complementar do Sistema de Gestão de Biblioteca.
  * Adiciona cadastro dinâmico, busca no acervo, alternância de tema claro/escuro
- * e controle de exibição de fichas empilhadas.
+ * e controle de exibição de fichas empilhadas.A validação detalhada dos campos fica em validacao.js,
+ * e a busca de endereço por CEP fica em cep.js.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
