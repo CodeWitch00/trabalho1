@@ -1,0 +1,12 @@
+# Credenciais e configurações locais
+.env
+mise.local.toml
+
+# Artefatos gerados pelo Maven
+**/target/
+
+# Arquivos de IDE e sistema operacional
+.idea/
+.vscode/
+*.iml
+.DS_Store

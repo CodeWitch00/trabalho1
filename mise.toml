@@ -1,0 +1,27 @@
+[tools]
+java = "17"
+maven = "3.9"
+tomcat = "10.1"
+
+[tasks.versions]
+description = "Exibe as versões das ferramentas do projeto"
+run = [
+    "java -version",
+    "mvn -version",
+    "catalina.sh version",
+]
+
+[tasks.test]
+description = "Executa os testes unitários e de integração configurados"
+dir = "{{ config_root }}/biblioteca"
+run = "mvn test"
+
+[tasks.verify]
+description = "Executa todas as verificações configuradas no Maven"
+dir = "{{ config_root }}/biblioteca"
+run = "mvn verify"
+
+[tasks.package]
+description = "Gera o pacote WAR da aplicação"
+dir = "{{ config_root }}/biblioteca"
+run = "mvn package"
