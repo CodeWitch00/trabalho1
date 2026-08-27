@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class ConnectionFactory implements ConnectionProvider {
+    private static final String DRIVER_POSTGRESQL = "org.postgresql.Driver";
+
     private final String url;
     private final String usuario;
     private final String senha;
@@ -26,7 +28,16 @@ public class ConnectionFactory implements ConnectionProvider {
 
     @Override
     public Connection obterConexao() throws SQLException {
+        carregarDriver();
         return DriverManager.getConnection(url, usuario, senha);
+    }
+
+    private void carregarDriver() {
+        try {
+            Class.forName(DRIVER_POSTGRESQL);
+        } catch (ClassNotFoundException excecao) {
+            throw new IllegalStateException("Driver JDBC do PostgreSQL nao encontrado", excecao);
+        }
     }
 
     private static String exigirValor(String valor, String nome) {

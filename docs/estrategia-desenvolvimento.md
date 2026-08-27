@@ -478,3 +478,70 @@ Verificacoes executadas:
   classes Java e dependencias de runtime.
 - `mise run test-db`: schema, dados iniciais, 24 testes unitarios e dois testes
   de integracao DAO/JDBC contra PostgreSQL 17.6 temporario, sem falhas.
+
+### Registro do Controller e das Views do CRUD de livros
+
+Em 27 de agosto de 2026, foram implementados `AplicacaoListener`,
+`AtributosAplicacao`, `LivroController` e as JSPs
+`WEB-INF/views/livros/lista.jsp` e `WEB-INF/views/livros/formulario.jsp`.
+O Servlet foi mapeado em `/livros/*` no `web.xml`.
+
+Rotas implementadas:
+
+- `GET /livros`: listagem e pesquisa por titulo, autor ou categoria.
+- `GET /livros/novo`: formulario de cadastro.
+- `POST /livros`: cadastro.
+- `GET /livros/editar?id={id}`: formulario de edicao.
+- `POST /livros/atualizar`: atualizacao.
+- `POST /livros/excluir`: exclusao com confirmacao na View.
+
+O fluxo das escritas usa Post/Redirect/Get: depois de cadastrar, atualizar ou
+excluir, o Controller grava uma mensagem curta na sessao e redireciona para
+`/livros`. A View nao acessa DAO nem JDBC; ela apenas renderiza dados enviados
+pelo Controller.
+
+Verificacoes executadas:
+
+- `mise run test`: 31 testes unitarios, incluindo seis testes do Controller.
+- `mise run package`: WAR gerado com Controller, listener, JSPs, CSS e JS.
+- `mise run test-db`: schema, dados iniciais, 31 testes unitarios e dois testes
+  de integracao DAO/JDBC contra PostgreSQL 17.6 temporario, sem falhas.
+
+Observacao: a aplicacao ainda nao foi iniciada contra o Supabase porque o
+arquivo `.env` local nao existe. As credenciais continuam fora do repositorio.
+
+### Registro da execucao local
+
+Em 27 de agosto de 2026, foi adicionada a tarefa `mise run dev-local`. Ela sobe
+um PostgreSQL temporario em `/tmp`, aplica `schema.sql` e `dados-iniciais.sql`,
+gera o WAR e inicia o Tomcat com a aplicacao publicada em
+`http://localhost:8080/biblioteca/livros`.
+
+Essa tarefa serve para testar o fluxo HTTP no navegador sem depender de
+credenciais do Supabase. Ao encerrar com `Ctrl+C`, Tomcat, PostgreSQL e arquivos
+temporarios sao removidos.
+
+Ainda em 27 de agosto de 2026, a tarefa foi executada localmente com Tomcat
+10.1.59 e PostgreSQL 17.6 temporario. Foram validados por HTTP:
+
+- `GET /biblioteca/livros`: retornou 200 e listou 15 livros.
+- `GET /biblioteca/livros?busca=Machado`: retornou 200 e filtrou resultados.
+- `GET /biblioteca/livros/novo`: retornou 200 e renderizou o formulario.
+- `POST /biblioteca/livros`: cadastrou um livro e redirecionou para `/livros`.
+- `POST /biblioteca/livros/atualizar`: atualizou o registro criado.
+- `POST /biblioteca/livros/excluir`: removeu o registro criado.
+
+Durante esse teste foi corrigido o carregamento explicito do driver JDBC
+PostgreSQL em `ConnectionFactory`, necessario para execucao dentro do Tomcat.
+O total final no banco temporario voltou para 15 livros.
+
+### Registro da execucao com Supabase
+
+Em 27 de agosto de 2026, foi adicionada a tarefa `mise run dev-supabase`. Ela
+gera o WAR e sobe o Tomcat local usando `DB_URL`, `DB_USER` e `DB_PASSWORD`
+carregados pelo mise a partir do arquivo `.env` da raiz do repositorio.
+
+A tarefa nao cria tabelas nem insere dados no Supabase. O schema e a carga
+inicial continuam sob responsabilidade dos scripts SQL ja executados no painel
+do Supabase. Se alguma variavel obrigatoria estiver ausente, o script para antes
+de iniciar o Tomcat e orienta a configurar o `.env`.

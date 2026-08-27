@@ -40,3 +40,13 @@ run = "mvn verify"
 description = "Gera o pacote WAR da aplicação"
 dir = "{{ config_root }}/biblioteca"
 run = "mvn package"
+
+[tasks.dev-local]
+description = "Sobe PostgreSQL temporario e Tomcat local para testar a aplicacao"
+dir = "{{ config_root }}/biblioteca"
+run = "./scripts/rodar-local.sh"
+
+[tasks.dev-supabase]
+description = "Sobe Tomcat local usando o PostgreSQL do Supabase configurado no .env"
+dir = "{{ config_root }}/biblioteca"
+run = "./scripts/rodar-supabase.sh"

@@ -18,6 +18,10 @@ public enum StatusLivro {
         return descricao;
     }
 
+    public String getClasseCss() {
+        return "status--" + name().toLowerCase(Locale.ROOT);
+    }
+
     public static StatusLivro deTexto(String texto) {
         if (texto == null || texto.isBlank()) {
             throw new IllegalArgumentException("Status do livro é obrigatório");

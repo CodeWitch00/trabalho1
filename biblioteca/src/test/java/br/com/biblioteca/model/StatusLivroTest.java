@@ -28,6 +28,11 @@ class StatusLivroTest {
     }
 
     @Test
+    void deveFornecerClasseCss() {
+        assertEquals("status--disponivel", StatusLivro.DISPONIVEL.getClasseCss());
+    }
+
+    @Test
     void deveRejeitarStatusAusenteOuDesconhecido() {
         assertAll(
             () -> assertThrows(IllegalArgumentException.class, () -> StatusLivro.deTexto(null)),

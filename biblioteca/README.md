@@ -60,6 +60,10 @@ biblioteca/
 
 ## Funcionalidades atuais
 
+- CRUD de livros no servidor pela rota `/livros`;
+- listagem e pesquisa de livros persistidos;
+- cadastro, edicao e exclusao com Controller, Service, DAO/JDBC e PostgreSQL;
+- mensagens de sucesso/erro via redirecionamento apos operacoes de escrita;
 - **Ficha 1 — Cadastro**: formulário para registrar um novo livro
   (título, autor(a), categoria, ISBN, ano, exemplares e status), com
   validação nativa do HTML5 e validação complementar em JavaScript
@@ -103,6 +107,37 @@ Gerar o arquivo WAR:
 
 ```bash
 mise run package
+```
+
+Rodar a aplicacao localmente com PostgreSQL temporario:
+
+```bash
+mise run dev-local
+```
+
+A rota principal ficara em:
+
+```text
+http://localhost:8080/biblioteca/livros
+```
+
+Rodar a aplicacao localmente conectada ao Supabase:
+
+```bash
+mise run dev-supabase
+```
+
+Essa tarefa exige `.env` configurado na raiz do repositorio.
+
+## Rotas do CRUD de livros
+
+```text
+GET  /livros
+GET  /livros/novo
+POST /livros
+GET  /livros/editar?id={id}
+POST /livros/atualizar
+POST /livros/excluir
 ```
 
 ## Variaveis de ambiente
