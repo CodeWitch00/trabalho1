@@ -81,6 +81,7 @@ do ambiente:
 - PostgreSQL hospedado no Supabase;
 - Maven 3.9;
 - Apache Tomcat 10.1;
+- PostgreSQL 17.6, mesma versão principal e secundária informada pelo Supabase;
 - mise para instalar as ferramentas e executar tarefas reproduzíveis;
 - HTML, CSS e JavaScript existentes;
 - JUnit para testes automatizados;
@@ -402,3 +403,10 @@ será revisto para representar exemplares ou quantidades disponíveis.
 
 A próxima decisão será a aprovação do modelo físico PostgreSQL e dos respectivos
 casos de teste antes da criação de `schema.sql` e `dados-iniciais.sql`.
+
+### Registro do ambiente PostgreSQL
+
+Em 26 de agosto de 2026, o projeto `biblioteca-aap` foi criado no Supabase na
+região de São Paulo. A consulta `SELECT version()` informou PostgreSQL 17.6 em
+arquitetura ARM de 64 bits. Os testes locais do esquema usarão PostgreSQL 17.6
+descartável, administrado pelo mise, sem acessar ou modificar o banco remoto.

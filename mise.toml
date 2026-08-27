@@ -2,6 +2,7 @@
 java = "17"
 maven = "3.9"
 tomcat = "10.1"
+postgres = "17.6"
 
 [tasks.versions]
 description = "Exibe as versões das ferramentas do projeto"
@@ -15,6 +16,11 @@ run = [
 description = "Executa os testes unitários e de integração configurados"
 dir = "{{ config_root }}/biblioteca"
 run = "mvn test"
+
+[tasks.test-db]
+description = "Testa o esquema e o CRUD em um PostgreSQL local descartável"
+dir = "{{ config_root }}/biblioteca"
+run = "./scripts/testar-banco.sh"
 
 [tasks.verify]
 description = "Executa todas as verificações configuradas no Maven"
