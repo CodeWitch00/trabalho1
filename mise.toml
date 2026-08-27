@@ -4,6 +4,9 @@ maven = "3.9"
 tomcat = "10.1"
 postgres = "17.6"
 
+[env]
+_.file = { path = ".env", redact = true }
+
 [tasks.versions]
 description = "Exibe as versões das ferramentas do projeto"
 run = [
@@ -22,6 +25,11 @@ run = "mvn test"
 description = "Testa o esquema e o CRUD em um PostgreSQL local descartável"
 dir = "{{ config_root }}/biblioteca"
 run = "./scripts/testar-banco.sh"
+
+[tasks.test-db-remote]
+description = "Testa, em modo somente leitura, a conexão JDBC com o Supabase"
+dir = "{{ config_root }}/biblioteca"
+run = "mvn failsafe:integration-test failsafe:verify -Dtest.remote=true -Dit.test=ConnectionFactoryRemoteIT"
 
 [tasks.verify]
 description = "Executa todas as verificações configuradas no Maven"

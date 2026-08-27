@@ -1,40 +1,64 @@
-# Sistema de Gestão de Biblioteca
+# Sistema de Gestao de Biblioteca
 
-Interface gráfica (GUI) para cadastro, busca e visualização de livros de
-um acervo de biblioteca.
+Aplicacao web academica para gestao de biblioteca, organizada em MVC e
+preparada para CRUD de livros com Java, Servlets, JDBC e PostgreSQL.
 
 ## Objetivo
 
-Demonstrar, para fins acadêmicos, a construção de uma interface web
-semântica, responsiva e acessível utilizando HTML5 e CSS3, com JavaScript
-apenas como complemento opcional.
+Transformar a interface web existente em uma aplicacao funcional, integrando:
+
+- front-end com HTML, CSS e JavaScript;
+- camada Controller para requisicoes e respostas HTTP;
+- camada Service para regras de negocio;
+- camada DAO/JDBC para acesso ao banco;
+- persistencia em PostgreSQL.
 
 ## Tecnologias
 
-- HTML5
-- CSS3 (variáveis, Flexbox, Grid, Media Queries)
-- JavaScript (ES5+, vanilla, sem frameworks)
+- Java 17
+- Jakarta Servlet 6
+- JSP/JSTL, em etapa posterior de View dinamica
+- JDBC
+- PostgreSQL 17.6 no Supabase
+- Maven 3.9
+- Apache Tomcat 10.1
+- mise
+- HTML, CSS e JavaScript vanilla
+- JUnit 5 e Mockito
 
-Nenhum framework de CSS ou de componentes (Bootstrap, Tailwind, etc.) foi
-utilizado.
+## Estrutura MVC
 
-## Estrutura de arquivos
-
-```
+```text
 biblioteca/
-│
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   ├── script.js
-│   ├── validacao.js
-│   └── cep.js
-├── README.md
-└── relatorio.md
+|-- pom.xml
+|-- database/
+|   |-- schema.sql
+|   |-- dados-iniciais.sql
+|   `-- teste-schema.sql
+|-- scripts/
+|   `-- testar-banco.sh
+`-- src/
+    |-- main/
+    |   |-- java/br/com/biblioteca/
+    |   |   |-- config/       # configuracao de conexao
+    |   |   |-- controller/   # Servlets HTTP (proxima etapa)
+    |   |   |-- dao/          # persistencia com JDBC
+    |   |   |-- exception/    # excecoes da aplicacao
+    |   |   |-- model/        # entidades do dominio
+    |   |   `-- service/      # regras de negocio
+    |   `-- webapp/
+    |       |-- index.html    # View estatica atual
+    |       |-- css/
+    |       |-- js/
+    |       `-- WEB-INF/
+    |           |-- views/    # JSPs protegidas (proxima etapa)
+    |           `-- web.xml
+    `-- test/
+        |-- java/br/com/biblioteca/
+        `-- resources/
 ```
 
-## Funcionalidades
+## Funcionalidades atuais
 
 - **Ficha 1 — Cadastro**: formulário para registrar um novo livro
   (título, autor(a), categoria, ISBN, ano, exemplares e status), com
@@ -53,12 +77,46 @@ biblioteca/
 
 ## Como executar
 
-O projeto é inteiramente client-side: não há backend próprio ou build
-steps. Basta abrir o arquivo `index.html` em um navegador.
+Na fase atual, o projeto ja possui base Maven Web, Model, Service, DAO/JDBC e
+testes automatizados. A View ainda esta em HTML estatico e sera integrada aos
+Controllers na proxima etapa.
 
-A estrutura HTML e os dados de exemplo funcionam mesmo com o JavaScript
-desativado; os scripts apenas adicionam cadastro dinâmico, busca no
-acervo, validação em tempo real, alternância de tema e a busca de
-endereço por CEP. A busca de CEP depende de conexão com a internet, pois
-consulta a API pública ViaCEP (https://viacep.com.br); sem conexão, o
-endereço pode ser preenchido manualmente.
+Verificar ferramentas:
+
+```bash
+mise run versions
+```
+
+Executar testes unitarios:
+
+```bash
+mise run test
+```
+
+Executar testes com PostgreSQL local temporario:
+
+```bash
+mise run test-db
+```
+
+Gerar o arquivo WAR:
+
+```bash
+mise run package
+```
+
+## Variaveis de ambiente
+
+As credenciais do banco nao devem ser versionadas. Use `.env.example` como
+referencia para criar `.env` na raiz do repositorio:
+
+```text
+DB_URL=jdbc:postgresql://HOST_DO_POOLER:5432/postgres?sslmode=require
+DB_USER=postgres.REFERENCIA_DO_PROJETO
+DB_PASSWORD=SUA_SENHA_DO_BANCO
+```
+
+## Documentacao
+
+A estrategia geral esta em `../docs/estrategia-desenvolvimento.md`.
+A organizacao do repositorio esta em `../docs/estrutura-repositorio.md`.

@@ -13,7 +13,9 @@ critérios de aceitação serão apresentados e aprovados em conjunto.
 
 ## 2. Estado atual
 
-O projeto possui uma interface estática construída com HTML, CSS e JavaScript.
+O projeto iniciou com uma interface estática construída com HTML, CSS e
+JavaScript. Esses arquivos agora ficam dentro da estrutura Maven Web, em
+`biblioteca/src/main/webapp`.
 Ela contém:
 
 - formulário de cadastro de livros;
@@ -153,6 +155,7 @@ biblioteca/
     |-- main/
     |   |-- java/br/com/biblioteca/
     |   `-- webapp/
+    |       |-- index.html
     |       |-- WEB-INF/views/
     |       |-- css/
     |       `-- js/
@@ -420,3 +423,58 @@ Também em 26 de agosto de 2026, `schema.sql`, `dados-iniciais.sql` e
 `teste-schema.sql` foram executados manualmente no SQL Editor do projeto
 Supabase. A consulta `SELECT COUNT(*) FROM livro` retornou `15`, confirmando a
 criação da tabela e a carga inicial no banco remoto.
+
+### Registro da estrutura Maven Web
+
+Em 26 de agosto de 2026, foi criada a estrutura Maven Web com Java 17,
+empacotamento WAR, Jakarta Servlet 6, JSP/JSTL, driver JDBC PostgreSQL, JUnit 5
+e Mockito 5. A execução de `mise run verify` concluiu com `BUILD SUCCESS`, um
+teste unitário executado e nenhuma falha. O arquivo `target/biblioteca.war` foi
+gerado e inspecionado: as bibliotecas de runtime foram incluídas, enquanto a API
+Servlet permaneceu fora do WAR porque será fornecida pelo Tomcat.
+
+### Registro do Model
+
+Em 26 de agosto de 2026, foram implementados o JavaBean `Livro` e o enum
+`StatusLivro`. A suíte passou a executar seis testes unitários, todos aprovados,
+cobrindo propriedades, construtor de cadastro, descrições dos status, conversão
+de valores do formulário e rejeição de status ausente ou desconhecido. O WAR e
+o teste descartável do PostgreSQL também foram executados novamente com sucesso.
+
+### Registro do Service
+
+Em 26 de agosto de 2026, foram implementados o contrato `LivroDAO`, o
+`LivroService` e as exceções de validação e de livro não encontrado. A camada
+normaliza textos e ISBN, valida ISBN-10 e ISBN-13, ano, quantidade e status,
+impede duplicidade por meio do DAO e confirma a existência antes de atualizar ou
+excluir. A suíte passou a executar 23 testes unitários, sem falhas ou erros. O
+empacotamento WAR e o teste de regressão no PostgreSQL descartável também foram
+concluídos com sucesso.
+
+### Registro do DAO/JDBC
+
+Em 27 de agosto de 2026, foram implementados `ConnectionFactory`,
+`ConnectionProvider`, `LivroJdbcDAO` e `PersistenciaException`. As consultas
+usam `PreparedStatement`, recursos JDBC são fechados com `try-with-resources` e
+as credenciais são obtidas por variáveis de ambiente. A tarefa
+`mise run test-db` executou 24 testes unitários e dois testes de integração JDBC
+contra PostgreSQL 17.6 descartável, sem falhas ou erros. O teste Java confirmou
+inserção, listagem ordenada, busca por identificador, pesquisa com `ILIKE`,
+verificação de ISBN, atualização, exclusão e mapeamento dos timestamps.
+
+### Registro da organizacao do repositorio
+
+Em 27 de agosto de 2026, o frontend foi movido para
+`biblioteca/src/main/webapp`, que e a pasta padrao de recursos web em uma
+aplicacao Maven empacotada como WAR. A pasta de descricao dos trabalhos foi
+renomeada de `docs/decricao` para `docs/descricao`. Tambem foram adicionados
+`README.md` na raiz, `docs/estrutura-repositorio.md`, o pacote
+`controller` e a pasta `WEB-INF/views` para evidenciar a separacao MVC.
+
+Verificacoes executadas:
+
+- `mise run test`: 24 testes unitarios, sem falhas.
+- `mise run package`: WAR gerado com `index.html`, `css/`, `js/`,
+  classes Java e dependencias de runtime.
+- `mise run test-db`: schema, dados iniciais, 24 testes unitarios e dois testes
+  de integracao DAO/JDBC contra PostgreSQL 17.6 temporario, sem falhas.
