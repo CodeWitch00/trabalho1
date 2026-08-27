@@ -1,31 +1,30 @@
 # Estrutura do Repositorio
 
-Este documento mostra onde cada parte do sistema fica e qual papel ela cumpre
-na arquitetura MVC.
+Este documento mostra onde cada parte do sistema fica depois da reorganizacao
+do repositorio e qual papel ela cumpre na arquitetura MVC.
 
 ## Visao geral
 
 ```text
-Trabalho_AAP/
+.
 |-- .env.example
 |-- mise.toml
+|-- pom.xml
+|-- README.md
 |-- docs/
 |   |-- descricao/
 |   |-- relatorio/
 |   |-- estrategia-desenvolvimento.md
 |   `-- estrutura-repositorio.md
-`-- biblioteca/
-    |-- pom.xml
-    |-- README.md
-    |-- database/
-    |-- scripts/
-    `-- src/
+|-- database/
+|-- scripts/
+`-- src/
 ```
 
 ## Aplicacao
 
 ```text
-biblioteca/src/main/
+src/main/
 |-- java/br/com/biblioteca/
 |   |-- config/
 |   |-- controller/
@@ -44,8 +43,8 @@ biblioteca/src/main/
 
 ## Papel de cada camada
 
-- `webapp/`: camada View. Contem HTML, CSS, JavaScript e futuramente JSPs.
-- `controller/`: camada Controller. Vai conter os Servlets que recebem HTTP.
+- `webapp/`: camada View. Contem HTML, CSS, JavaScript e JSPs.
+- `controller/`: camada Controller. Contem os Servlets que recebem HTTP.
 - `service/`: regras de negocio, validacoes e orquestracao dos casos de uso.
 - `model/`: entidades do dominio, como `Livro`.
 - `dao/`: acesso ao banco via JDBC e SQL parametrizado.
@@ -55,7 +54,7 @@ biblioteca/src/main/
 ## Banco de dados
 
 ```text
-biblioteca/database/
+database/
 |-- schema.sql
 |-- dados-iniciais.sql
 |-- teste-schema.sql
@@ -70,7 +69,7 @@ biblioteca/database/
 ## Testes
 
 ```text
-biblioteca/src/test/
+src/test/
 |-- java/br/com/biblioteca/
 `-- resources/
 ```
@@ -79,7 +78,14 @@ A estrategia segue a piramide de testes:
 
 - muitos testes unitarios para Model e Service;
 - testes de integracao para DAO/JDBC e banco;
-- poucos testes E2E quando os Controllers e a View dinamica estiverem prontos.
+- testes de Controller para validar os fluxos HTTP principais.
+
+## Estado funcional
+
+O CRUD de livros ja esta implementado na rota `/livros`, com Controller,
+Service, DAO/JDBC, JSPs em `WEB-INF/views` e PostgreSQL. A proxima evolucao
+funcional prevista e o Trabalho 5: autenticacao, autorizacao e testes de
+seguranca.
 
 ## Regra pratica
 

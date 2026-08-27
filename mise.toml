@@ -18,35 +18,35 @@ run = [
 
 [tasks.test]
 description = "Executa os testes unitários e de integração configurados"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "mvn test"
 
 [tasks.test-db]
 description = "Testa o esquema e o CRUD em um PostgreSQL local descartável"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "./scripts/testar-banco.sh"
 
 [tasks.test-db-remote]
 description = "Testa, em modo somente leitura, a conexão JDBC com o Supabase"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "mvn failsafe:integration-test failsafe:verify -Dtest.remote=true -Dit.test=ConnectionFactoryRemoteIT"
 
 [tasks.verify]
 description = "Executa todas as verificações configuradas no Maven"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "mvn verify"
 
 [tasks.package]
 description = "Gera o pacote WAR da aplicação"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "mvn package"
 
 [tasks.dev-local]
 description = "Sobe PostgreSQL temporario e Tomcat local para testar a aplicacao"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "./scripts/rodar-local.sh"
 
 [tasks.dev-supabase]
 description = "Sobe Tomcat local usando o PostgreSQL do Supabase configurado no .env"
-dir = "{{ config_root }}/biblioteca"
+dir = "{{ config_root }}"
 run = "./scripts/rodar-supabase.sh"

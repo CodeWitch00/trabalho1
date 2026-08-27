@@ -1,35 +1,166 @@
-# Trabalho AAP - Sistema de Biblioteca
+# Sistema de Gestao de Biblioteca
 
-Repositorio do projeto academico de gestao de biblioteca.
+Aplicacao web academica para gestao de biblioteca, organizada em MVC, com CRUD
+de livros em Java, Servlets, JSP, JDBC e PostgreSQL.
 
-## Onde esta cada coisa
+## Objetivo
 
-- `biblioteca/`: aplicacao web Java/Maven.
-- `biblioteca/src/main/java/br/com/biblioteca/`: codigo Java organizado por MVC.
-- `biblioteca/src/main/webapp/`: front-end da aplicacao.
-- `biblioteca/database/`: scripts SQL do PostgreSQL.
-- `biblioteca/scripts/`: scripts auxiliares de teste.
-- `docs/`: estrategia, descricoes e relatorios.
+Manter uma aplicacao web funcional para biblioteca, integrando:
 
-## Arquitetura
+- front-end com HTML, CSS e JavaScript;
+- camada Controller para requisicoes e respostas HTTP;
+- camada Service para regras de negocio;
+- camada DAO/JDBC para acesso ao banco;
+- persistencia em PostgreSQL;
+- proximas evolucoes de autenticacao, autorizacao e seguranca.
 
-O fluxo aprovado para a aplicacao e:
+## Tecnologias
+
+- Java 17
+- Jakarta Servlet 6
+- JSP/JSTL
+- JDBC
+- PostgreSQL 17.6 no Supabase
+- Maven 3.9
+- Apache Tomcat 10.1
+- mise
+- HTML, CSS e JavaScript vanilla
+- JUnit 5 e Mockito
+
+## Estrutura MVC
 
 ```text
-View -> Controller -> Service -> DAO -> PostgreSQL
+.
+|-- pom.xml
+|-- mise.toml
+|-- .env.example
+|-- docs/
+|-- database/
+|   |-- schema.sql
+|   |-- dados-iniciais.sql
+|   `-- teste-schema.sql
+|-- scripts/
+|   `-- testar-banco.sh
+`-- src/
+    |-- main/
+    |   |-- java/br/com/biblioteca/
+    |   |   |-- config/       # configuracao de conexao
+    |   |   |-- controller/   # Servlets HTTP
+    |   |   |-- dao/          # persistencia com JDBC
+    |   |   |-- exception/    # excecoes da aplicacao
+    |   |   |-- model/        # entidades do dominio
+    |   |   `-- service/      # regras de negocio
+    |   `-- webapp/
+    |       |-- index.html
+    |       |-- css/
+    |       |-- js/
+    |       `-- WEB-INF/
+    |           |-- views/    # JSPs renderizadas pelo Controller
+    |           `-- web.xml
+    `-- test/
+        |-- java/br/com/biblioteca/
+        `-- resources/
 ```
 
-Mais detalhes:
+## Funcionalidades atuais
 
-- `docs/estrategia-desenvolvimento.md`
-- `docs/estrutura-repositorio.md`
-- `biblioteca/README.md`
+- CRUD de livros no servidor pela rota `/livros`;
+- listagem e pesquisa de livros persistidos;
+- cadastro, edicao e exclusao com Controller, Service, DAO/JDBC e PostgreSQL;
+- mensagens de sucesso/erro via redirecionamento apos operacoes de escrita;
+- **Ficha 1 — Cadastro**: formulário para registrar um novo livro
+  (título, autor(a), categoria, ISBN, ano, exemplares e status), com
+  validação nativa do HTML5 e validação complementar em JavaScript
+  (mensagens de erro específicas por campo, exibidas em tempo real).
+- **Ficha 2 — Acervo**: tabela semântica com os livros cadastrados,
+  incluindo dados de exemplo, busca por título/autor(a)/categoria e
+  contador de resultados.
+- **Ficha 3 — Leitor**: formulário de cadastro de leitores(as), com
+  busca automática de endereço a partir do CEP (requisição assíncrona
+  à API pública ViaCEP), sem recarregar a página.
+- **Ficha 4 — Resumo**: indicadores do acervo total (livros, disponíveis,
+  emprestados, reservados, categorias e autores).
+- Alternância entre tema claro e tema escuro, com preferência salva no
+  navegador.
 
-## Comandos principais
+## Como executar
+
+Na fase atual, o projeto ja possui base Maven Web, Model, Service, DAO/JDBC,
+Controller, JSPs e testes automatizados para o CRUD de livros.
+
+Verificar ferramentas:
 
 ```bash
 mise run versions
+```
+
+Executar testes unitarios:
+
+```bash
 mise run test
+```
+
+Executar testes com PostgreSQL local temporario:
+
+```bash
 mise run test-db
+```
+
+Gerar o arquivo WAR:
+
+```bash
 mise run package
 ```
+
+Rodar a aplicacao localmente com PostgreSQL temporario:
+
+```bash
+mise run dev-local
+```
+
+A rota principal ficara em:
+
+```text
+http://localhost:8080/biblioteca/livros
+```
+
+Rodar a aplicacao localmente conectada ao Supabase:
+
+```bash
+mise run dev-supabase
+```
+
+Essa tarefa exige `.env` configurado na raiz do repositorio.
+
+## Rotas do CRUD de livros
+
+```text
+GET  /livros
+GET  /livros/novo
+POST /livros
+GET  /livros/editar?id={id}
+POST /livros/atualizar
+POST /livros/excluir
+```
+
+## Variaveis de ambiente
+
+As credenciais do banco nao devem ser versionadas. Use `.env.example` como
+referencia para criar `.env` na raiz do repositorio:
+
+```text
+DB_URL=jdbc:postgresql://HOST_DO_POOLER:5432/postgres?sslmode=require
+DB_USER=postgres.REFERENCIA_DO_PROJETO
+DB_PASSWORD=SUA_SENHA_DO_BANCO
+```
+
+## Documentacao
+
+A estrategia geral esta em `docs/estrategia-desenvolvimento.md`.
+A organizacao do repositorio esta em `docs/estrutura-repositorio.md`.
+
+## Proxima etapa
+
+O CRUD de livros atende ao escopo do Trabalho 4. A proxima etapa do projeto e o
+Trabalho 5, com autenticacao segura, controle de acesso por perfil, protecao de
+rotas e plano de testes de seguranca.

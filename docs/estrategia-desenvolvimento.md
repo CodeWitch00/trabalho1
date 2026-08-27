@@ -2,10 +2,9 @@
 
 ## 1. Objetivo
 
-Transformar o front-end existente na pasta `biblioteca` em uma aplicação web
-funcional, com operações CRUD, separação em camadas segundo o padrão MVC,
-tratamento de requisições e respostas HTTP no servidor e persistência em banco
-de dados relacional.
+Evoluir a aplicação web de gestão de biblioteca, mantendo separação em camadas
+segundo o padrão MVC, tratamento de requisições e respostas HTTP no servidor e
+persistência em banco de dados relacional.
 
 Este documento orienta o desenvolvimento, mas não encerra decisões que ainda
 precisam ser tomadas. Antes de cada etapa, as alternativas, consequências e
@@ -14,9 +13,10 @@ critérios de aceitação serão apresentados e aprovados em conjunto.
 ## 2. Estado atual
 
 O projeto iniciou com uma interface estática construída com HTML, CSS e
-JavaScript. Esses arquivos agora ficam dentro da estrutura Maven Web, em
-`biblioteca/src/main/webapp`.
-Ela contém:
+JavaScript. Depois da reorganizacao do repositorio, a aplicacao Maven Web fica
+diretamente na raiz, com recursos web em `src/main/webapp`.
+
+A interface contém:
 
 - formulário de cadastro de livros;
 - visualização e pesquisa do acervo;
@@ -26,10 +26,9 @@ Ela contém:
 - validações no navegador;
 - responsividade, acessibilidade e temas claro e escuro.
 
-Atualmente, livros e leitores são inseridos apenas no DOM. Os dados desaparecem
-quando a página é recarregada. Ainda não existem servidor Java, Controllers,
-camada de serviço, DAO, JDBC ou persistência em banco de dados. Também não há
-operações funcionais de atualização e exclusão.
+O CRUD de livros ja foi implementado com Controller, Service, DAO/JDBC,
+PostgreSQL e JSPs. A interface de leitores e a consulta ViaCEP permanecem no
+front-end, sem persistencia nesta etapa.
 
 ## 3. Arquitetura em avaliação
 
@@ -148,7 +147,7 @@ Reorganizar o código no formato de uma aplicação Java Web, preservando o
 frontend atual sempre que possível:
 
 ```text
-biblioteca/
+.
 |-- pom.xml
 |-- database/
 `-- src/
@@ -464,12 +463,12 @@ verificação de ISBN, atualização, exclusão e mapeamento dos timestamps.
 
 ### Registro da organizacao do repositorio
 
-Em 27 de agosto de 2026, o frontend foi movido para
-`biblioteca/src/main/webapp`, que e a pasta padrao de recursos web em uma
-aplicacao Maven empacotada como WAR. A pasta de descricao dos trabalhos foi
-renomeada de `docs/decricao` para `docs/descricao`. Tambem foram adicionados
-`README.md` na raiz, `docs/estrutura-repositorio.md`, o pacote
-`controller` e a pasta `WEB-INF/views` para evidenciar a separacao MVC.
+Em 27 de agosto de 2026, o frontend foi movido para `src/main/webapp`, que e a
+pasta padrao de recursos web em uma aplicacao Maven empacotada como WAR. A
+pasta de descricao dos trabalhos foi renomeada de `docs/decricao` para
+`docs/descricao`. Tambem foram adicionados `README.md` na raiz,
+`docs/estrutura-repositorio.md`, o pacote `controller` e a pasta
+`WEB-INF/views` para evidenciar a separacao MVC.
 
 Verificacoes executadas:
 
