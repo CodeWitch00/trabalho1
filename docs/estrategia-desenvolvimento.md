@@ -410,3 +410,13 @@ Em 26 de agosto de 2026, o projeto `biblioteca-aap` foi criado no Supabase na
 região de São Paulo. A consulta `SELECT version()` informou PostgreSQL 17.6 em
 arquitetura ARM de 64 bits. Os testes locais do esquema usarão PostgreSQL 17.6
 descartável, administrado pelo mise, sem acessar ou modificar o banco remoto.
+
+Na mesma data, o PostgreSQL 17.6 local foi instalado e o teste de integração do
+banco foi executado com sucesso. O teste criou um banco descartável, aplicou o
+esquema, carregou os 15 livros, verificou as operações CRUD e as restrições e
+finalizou com `ROLLBACK`. A tarefa reproduzível é `mise run test-db`.
+
+Também em 26 de agosto de 2026, `schema.sql`, `dados-iniciais.sql` e
+`teste-schema.sql` foram executados manualmente no SQL Editor do projeto
+Supabase. A consulta `SELECT COUNT(*) FROM livro` retornou `15`, confirmando a
+criação da tabela e a carga inicial no banco remoto.

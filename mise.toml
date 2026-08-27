@@ -10,6 +10,7 @@ run = [
     "java -version",
     "mvn -version",
     "catalina.sh version",
+    "postgres --version",
 ]
 
 [tasks.test]

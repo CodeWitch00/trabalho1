@@ -109,6 +109,36 @@ BEGIN
         WHEN check_violation THEN NULL;
     END;
 
+    BEGIN
+        INSERT INTO livro (
+            titulo, autor, categoria, ano_publicacao,
+            quantidade_exemplares, status
+        ) VALUES (NULL, 'Autor', 'Categoria', 2020, 1, 'DISPONIVEL');
+        RAISE EXCEPTION 'Um título nulo foi aceito';
+    EXCEPTION
+        WHEN not_null_violation THEN NULL;
+    END;
+
+    BEGIN
+        INSERT INTO livro (
+            titulo, autor, categoria, ano_publicacao,
+            quantidade_exemplares, status
+        ) VALUES ('Título', NULL, 'Categoria', 2020, 1, 'DISPONIVEL');
+        RAISE EXCEPTION 'Um autor nulo foi aceito';
+    EXCEPTION
+        WHEN not_null_violation THEN NULL;
+    END;
+
+    BEGIN
+        INSERT INTO livro (
+            titulo, autor, categoria, ano_publicacao,
+            quantidade_exemplares, status
+        ) VALUES ('Título', 'Autor', NULL, 2020, 1, 'DISPONIVEL');
+        RAISE EXCEPTION 'Uma categoria nula foi aceita';
+    EXCEPTION
+        WHEN not_null_violation THEN NULL;
+    END;
+
     -- Limites numéricos e valores de status.
     BEGIN
         INSERT INTO livro (
