@@ -35,7 +35,6 @@
                 <div class="ficha-header">
                     <span class="ficha-tag">CRUD</span>
                     <h2 id="acervo-titulo">Acervo cadastrado</h2>
-                    <p class="ficha-subtitulo">Dados carregados do PostgreSQL pelo Controller, Service e DAO.</p>
                 </div>
 
                 <c:if test="${not empty flashMensagem}">
