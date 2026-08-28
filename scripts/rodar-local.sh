@@ -9,6 +9,7 @@ APP_PG_PORT="${APP_PG_PORT:-55433}"
 APP_TMP_DIR="$(mktemp -d /tmp/biblioteca-app.XXXXXX)"
 APP_PG_DATA_DIR="${APP_TMP_DIR}/postgres-data"
 APP_PG_SOCKET_DIR="${APP_TMP_DIR}/postgres-socket"
+APP_PG_LOG="${APP_TMP_DIR}/postgres.log"
 APP_CATALINA_BASE="${APP_TMP_DIR}/tomcat"
 APP_TOMCAT_PID=""
 
@@ -49,7 +50,13 @@ initdb \
 pg_ctl \
     -D "${APP_PG_DATA_DIR}" \
     -o "-F -k ${APP_PG_SOCKET_DIR} -h 127.0.0.1 -p ${APP_PG_PORT}" \
-    -w start >/dev/null
+    -l "${APP_PG_LOG}" \
+    -w start >/dev/null || {
+        echo "Nao foi possivel iniciar o PostgreSQL temporario."
+        echo "Log do PostgreSQL:"
+        sed -n '1,120p' "${APP_PG_LOG}" || true
+        exit 1
+    }
 
 createdb \
     --host="${APP_PG_SOCKET_DIR}" \

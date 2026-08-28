@@ -5,14 +5,13 @@ de livros em Java, Servlets, JSP, JDBC e PostgreSQL.
 
 ## Objetivo
 
-Manter uma aplicacao web funcional para biblioteca, integrando:
+Aplicacao web funcional para biblioteca, integrando:
 
 - front-end com HTML, CSS e JavaScript;
 - camada Controller para requisicoes e respostas HTTP;
 - camada Service para regras de negocio;
 - camada DAO/JDBC para acesso ao banco;
-- persistencia em PostgreSQL;
-- proximas evolucoes de autenticacao, autorizacao e seguranca.
+- persistencia em PostgreSQL.
 
 ## Tecnologias
 
@@ -34,12 +33,12 @@ Manter uma aplicacao web funcional para biblioteca, integrando:
 |-- pom.xml
 |-- mise.toml
 |-- .env.example
-|-- docs/
 |-- database/
 |   |-- schema.sql
 |   |-- dados-iniciais.sql
 |   `-- teste-schema.sql
 |-- scripts/
+|   |-- executar-local.sh
 |   `-- testar-banco.sh
 `-- src/
     |-- main/
@@ -68,25 +67,122 @@ Manter uma aplicacao web funcional para biblioteca, integrando:
 - listagem e pesquisa de livros persistidos;
 - cadastro, edicao e exclusao com Controller, Service, DAO/JDBC e PostgreSQL;
 - mensagens de sucesso/erro via redirecionamento apos operacoes de escrita;
-- **Ficha 1 — Cadastro**: formulário para registrar um novo livro
+- **Ficha 1: Cadastro**: formulário para registrar um novo livro
   (título, autor(a), categoria, ISBN, ano, exemplares e status), com
   validação nativa do HTML5 e validação complementar em JavaScript
   (mensagens de erro específicas por campo, exibidas em tempo real).
-- **Ficha 2 — Acervo**: tabela semântica com os livros cadastrados,
+- **Ficha 2: Acervo**: tabela semântica com os livros cadastrados,
   incluindo dados de exemplo, busca por título/autor(a)/categoria e
   contador de resultados.
-- **Ficha 3 — Leitor**: formulário de cadastro de leitores(as), com
+- **Ficha 3: Leitor**: formulário de cadastro de leitores(as), com
   busca automática de endereço a partir do CEP (requisição assíncrona
   à API pública ViaCEP), sem recarregar a página.
-- **Ficha 4 — Resumo**: indicadores do acervo total (livros, disponíveis,
+- **Ficha 4: Resumo**: indicadores do acervo total (livros, disponíveis,
   emprestados, reservados, categorias e autores).
 - Alternância entre tema claro e tema escuro, com preferência salva no
   navegador.
 
-## Como executar
+## Como executar rapidamente
 
-Na fase atual, o projeto ja possui base Maven Web, Model, Service, DAO/JDBC,
-Controller, JSPs e testes automatizados para o CRUD de livros.
+A forma mais simples de executar localmente e usar o script pronto do projeto:
+
+```bash
+./scripts/executar-local.sh
+```
+
+Esse comando cria um PostgreSQL temporario, aplica os scripts SQL, gera o WAR,
+inicia o Tomcat e publica a aplicacao localmente.
+
+Depois acesse:
+
+```text
+http://localhost:8080/biblioteca/livros
+```
+
+Para encerrar, pressione `Ctrl+C` no terminal em que o script esta rodando. O
+banco temporario e os arquivos temporarios do Tomcat serao removidos
+automaticamente.
+
+Pre-requisitos para esse modo:
+
+- Java 17
+- Maven 3.9 ou superior
+- Apache Tomcat 10.1 com `catalina.sh` no `PATH`
+- PostgreSQL 17 com `initdb`, `pg_ctl`, `createdb` e `psql` no `PATH`
+
+## Como executar manualmente
+
+### 1. Pre-requisitos
+
+Instale:
+
+- Java 17
+- Maven 3.9 ou superior
+- Apache Tomcat 10.1
+- PostgreSQL 17, caso queira executar com banco local proprio
+
+Opcionalmente, instale o `mise` para usar as tarefas prontas do projeto.
+
+### 2. Banco de dados
+
+Crie um banco PostgreSQL e execute o script de criacao. Em um PostgreSQL local:
+
+```bash
+psql -h HOST -U USUARIO_DO_BANCO -d NOME_DO_BANCO -f database/schema.sql
+```
+
+Para carregar os dados iniciais de exemplo:
+
+```bash
+psql -h HOST -U USUARIO_DO_BANCO -d NOME_DO_BANCO -f database/dados-iniciais.sql
+```
+
+No Supabase, os mesmos scripts podem ser executados pelo SQL Editor do painel.
+
+Depois configure as variaveis de ambiente usadas pela aplicacao:
+
+```bash
+export DB_URL="jdbc:postgresql://HOST:5432/NOME_DO_BANCO"
+export DB_USER="USUARIO_DO_BANCO"
+export DB_PASSWORD="SENHA_DO_BANCO"
+```
+
+Se estiver usando Supabase, utilize os dados do Session Pooler na porta 5432 e
+mantenha `sslmode=require` na URL JDBC:
+
+```bash
+export DB_URL="jdbc:postgresql://HOST_DO_POOLER:5432/postgres?sslmode=require"
+export DB_USER="postgres.REFERENCIA_DO_PROJETO"
+export DB_PASSWORD="SUA_SENHA_DO_BANCO"
+```
+
+### 3. Executar com Maven e Tomcat
+
+Gere o arquivo WAR:
+
+```bash
+mvn package
+```
+
+Copie o arquivo gerado para a pasta `webapps` do Tomcat:
+
+```bash
+cp target/biblioteca.war "$CATALINA_HOME/webapps/"
+```
+
+Inicie o Tomcat:
+
+```bash
+"$CATALINA_HOME/bin/catalina.sh" run
+```
+
+Acesse:
+
+```text
+http://localhost:8080/biblioteca/livros
+```
+
+### 4. Executar com mise
 
 Verificar ferramentas:
 
@@ -94,7 +190,7 @@ Verificar ferramentas:
 mise run versions
 ```
 
-Executar testes unitarios:
+Executar testes:
 
 ```bash
 mise run test
@@ -130,7 +226,8 @@ Rodar a aplicacao localmente conectada ao Supabase:
 mise run dev-supabase
 ```
 
-Essa tarefa exige `.env` configurado na raiz do repositorio.
+Essa tarefa exige `.env` configurado na raiz do repositorio. Use
+`.env.example` como referencia.
 
 ## Rotas do CRUD de livros
 
@@ -143,24 +240,17 @@ POST /livros/atualizar
 POST /livros/excluir
 ```
 
-## Variaveis de ambiente
+## Testes
 
-As credenciais do banco nao devem ser versionadas. Use `.env.example` como
-referencia para criar `.env` na raiz do repositorio:
+Executar a suite automatizada:
 
-```text
-DB_URL=jdbc:postgresql://HOST_DO_POOLER:5432/postgres?sslmode=require
-DB_USER=postgres.REFERENCIA_DO_PROJETO
-DB_PASSWORD=SUA_SENHA_DO_BANCO
+```bash
+mvn test
 ```
 
-## Documentacao
+O projeto tambem possui um script para testar o schema e as operacoes principais
+em um PostgreSQL local descartavel:
 
-A estrategia geral esta em `docs/estrategia-desenvolvimento.md`.
-A organizacao do repositorio esta em `docs/estrutura-repositorio.md`.
-
-## Proxima etapa
-
-O CRUD de livros atende ao escopo do Trabalho 4. A proxima etapa do projeto e o
-Trabalho 5, com autenticacao segura, controle de acesso por perfil, protecao de
-rotas e plano de testes de seguranca.
+```bash
+./scripts/testar-banco.sh
+```

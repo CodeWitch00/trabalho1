@@ -1,6 +1,9 @@
 # Credenciais e configurações locais
 .env
 mise.local.toml
+.privado/
+.agents/
+.codex/
 
 # Artefatos gerados pelo Maven
 **/target/
