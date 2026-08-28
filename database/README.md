@@ -44,6 +44,3 @@ SELECT COUNT(*) FROM livro;
 Os scripts de estrutura e carga foram planejados para um banco vazio. Não os
 execute novamente sobre uma tabela já criada, pois a criação falhará e a carga
 poderá duplicar registros.
-
-Nunca registre no Git a senha, uma chave secreta ou uma string de conexão que
-contenha credenciais.
