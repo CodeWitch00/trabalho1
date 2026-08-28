@@ -33,6 +33,8 @@ Aplicacao web funcional para biblioteca, integrando:
 |-- pom.xml
 |-- mise.toml
 |-- .env.example
+|-- assets/
+|   `-- demo/
 |-- database/
 |   |-- schema.sql
 |   |-- dados-iniciais.sql
@@ -81,6 +83,12 @@ Aplicacao web funcional para biblioteca, integrando:
   emprestados, reservados, categorias e autores).
 - Alternância entre tema claro e tema escuro, com preferência salva no
   navegador.
+
+## Demonstracao visual
+
+A imagem abaixo mostra o fluxo principal do CRUD de livros:
+
+![Demonstracao do CRUD de livros](assets/demo/demo-crud-livros.gif)
 
 ## Arquivos principais
 
@@ -267,5 +275,5 @@ em um PostgreSQL local descartavel:
 ./scripts/testar-banco.sh
 ```
 
-O script correspondente esta em
+O script correspondente, esta em
 [scripts/testar-banco.sh](scripts/testar-banco.sh).
