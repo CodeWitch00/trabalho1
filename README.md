@@ -82,6 +82,15 @@ Aplicacao web funcional para biblioteca, integrando:
 - Alternância entre tema claro e tema escuro, com preferência salva no
   navegador.
 
+## Arquivos principais
+
+- [pom.xml](pom.xml): configuracao Maven da aplicacao.
+- [database/schema.sql](database/schema.sql): script de criacao do banco de dados.
+- [database/dados-iniciais.sql](database/dados-iniciais.sql): carga inicial de livros.
+- [.env.example](.env.example): exemplo das variaveis de ambiente.
+- [scripts/executar-local.sh](scripts/executar-local.sh): execucao local automatizada.
+- [scripts/testar-banco.sh](scripts/testar-banco.sh): teste do schema e da persistencia.
+
 ## Como executar rapidamente
 
 A forma mais simples de executar localmente e usar o script pronto do projeto:
@@ -91,7 +100,8 @@ A forma mais simples de executar localmente e usar o script pronto do projeto:
 ```
 
 Esse comando cria um PostgreSQL temporario, aplica os scripts SQL, gera o WAR,
-inicia o Tomcat e publica a aplicacao localmente.
+inicia o Tomcat e publica a aplicacao localmente. O script usado e
+[scripts/executar-local.sh](scripts/executar-local.sh).
 
 Depois acesse:
 
@@ -125,13 +135,15 @@ Opcionalmente, instale o `mise` para usar as tarefas prontas do projeto.
 
 ### 2. Banco de dados
 
-Crie um banco PostgreSQL e execute o script de criacao. Em um PostgreSQL local:
+Crie um banco PostgreSQL e execute o script de criacao
+[database/schema.sql](database/schema.sql). Em um PostgreSQL local:
 
 ```bash
 psql -h HOST -U USUARIO_DO_BANCO -d NOME_DO_BANCO -f database/schema.sql
 ```
 
-Para carregar os dados iniciais de exemplo:
+Para carregar os dados iniciais de exemplo com
+[database/dados-iniciais.sql](database/dados-iniciais.sql):
 
 ```bash
 psql -h HOST -U USUARIO_DO_BANCO -d NOME_DO_BANCO -f database/dados-iniciais.sql
@@ -227,7 +239,7 @@ mise run dev-supabase
 ```
 
 Essa tarefa exige `.env` configurado na raiz do repositorio. Use
-`.env.example` como referencia.
+[.env.example](.env.example) como referencia.
 
 ## Rotas do CRUD de livros
 
@@ -254,3 +266,6 @@ em um PostgreSQL local descartavel:
 ```bash
 ./scripts/testar-banco.sh
 ```
+
+O script correspondente esta em
+[scripts/testar-banco.sh](scripts/testar-banco.sh).
