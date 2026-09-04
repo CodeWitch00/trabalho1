@@ -3,6 +3,13 @@
 
 BEGIN;
 
+-- Credenciais locais de demonstração. Troque-as antes de qualquer implantação.
+-- As senhas em texto puro não são armazenadas: os valores abaixo são hashes PBKDF2-HMAC-SHA-256.
+INSERT INTO usuario (nome, email, senha_hash, perfil)
+VALUES
+    ('Administrador', 'admin@boaleitura.local', 'pbkdf2-sha256$210000$AAAAAAAAAAAAAAAAAAAAAA==$fMlkVKlaoevbL9sDAnpn6/e7efbCAmK4KYB0tMRJb3o=', 'ADMIN'),
+    ('Leitor', 'usuario@boaleitura.local', 'pbkdf2-sha256$210000$AAAAAAAAAAAAAAAAAAAAAA==$fMlkVKlaoevbL9sDAnpn6/e7efbCAmK4KYB0tMRJb3o=', 'USUARIO');
+
 INSERT INTO livro
     (titulo, autor, categoria, isbn, ano_publicacao, quantidade_exemplares, status)
 VALUES

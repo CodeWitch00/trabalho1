@@ -13,6 +13,7 @@
 
     <header class="site-header">
         <div class="site-header__identidade">
+            <div class="marca-parceira" aria-label="Cliente parceiro Boa Leitura"><strong>BL</strong><span>Boa Leitura</span></div>
             <p class="site-header__eyebrow">Biblioteca Municipal Boa Leitura</p>
             <h1>${tituloPagina}</h1>
         </div>
@@ -31,10 +32,11 @@
                 </div>
 
                 <c:if test="${not empty flashMensagem}">
-                    <p class="feedback" data-state="${flashTipo}" role="status">${flashMensagem}</p>
+                    <p class="feedback" data-state="${flashTipo}" role="status"><c:out value="${flashMensagem}" /></p>
                 </c:if>
 
                 <form id="form-cadastro" method="post" action="${acaoFormulario}">
+                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                     <c:if test="${not empty livro.id}">
                         <input type="hidden" name="id" value="${livro.id}">
                     </c:if>
@@ -44,7 +46,7 @@
 
                         <div class="form-field ${not empty erros.titulo ? 'invalido' : ''}">
                             <label for="titulo">Título <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
-                            <input type="text" id="titulo" name="titulo" value="${livro.titulo}" required>
+                            <input type="text" id="titulo" name="titulo" value="<c:out value='${livro.titulo}' />" required>
                             <c:if test="${not empty erros.titulo}">
                                 <small class="erro-campo">${erros.titulo}</small>
                             </c:if>
@@ -52,7 +54,7 @@
 
                         <div class="form-field ${not empty erros.autor ? 'invalido' : ''}">
                             <label for="autor">Autor(a) <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
-                            <input type="text" id="autor" name="autor" value="${livro.autor}" required>
+                            <input type="text" id="autor" name="autor" value="<c:out value='${livro.autor}' />" required>
                             <c:if test="${not empty erros.autor}">
                                 <small class="erro-campo">${erros.autor}</small>
                             </c:if>
@@ -60,7 +62,7 @@
 
                         <div class="form-field ${not empty erros.categoria ? 'invalido' : ''}">
                             <label for="categoria">Categoria <span class="asterisco-obrigatorio" aria-hidden="true">*</span></label>
-                            <input type="text" id="categoria" name="categoria" value="${livro.categoria}" required>
+                            <input type="text" id="categoria" name="categoria" value="<c:out value='${livro.categoria}' />" required>
                             <c:if test="${not empty erros.categoria}">
                                 <small class="erro-campo">${erros.categoria}</small>
                             </c:if>
@@ -68,7 +70,7 @@
 
                         <div class="form-field ${not empty erros.isbn ? 'invalido' : ''}">
                             <label for="isbn">ISBN</label>
-                            <input type="text" id="isbn" name="isbn" value="${livro.isbn}" placeholder="Ex: 9788535902778">
+                            <input type="text" id="isbn" name="isbn" value="<c:out value='${livro.isbn}' />" placeholder="Ex: 9788535902778">
                             <c:if test="${not empty erros.isbn}">
                                 <small class="erro-campo">${erros.isbn}</small>
                             </c:if>

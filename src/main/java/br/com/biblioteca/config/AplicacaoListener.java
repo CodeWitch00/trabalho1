@@ -1,6 +1,8 @@
 package br.com.biblioteca.config;
 
 import br.com.biblioteca.dao.LivroJdbcDAO;
+import br.com.biblioteca.dao.UsuarioJdbcDAO;
+import br.com.biblioteca.service.AutenticacaoService;
 import br.com.biblioteca.service.LivroService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -20,6 +22,13 @@ public class AplicacaoListener implements ServletContextListener {
             contexto.setAttribute(
                 AtributosAplicacao.LIVRO_SERVICE,
                 new LivroService(livroDAO)
+            );
+        }
+        if (contexto.getAttribute(AtributosAplicacao.AUTENTICACAO_SERVICE) == null) {
+            ConnectionFactory connectionFactory = ConnectionFactory.doAmbiente();
+            contexto.setAttribute(
+                AtributosAplicacao.AUTENTICACAO_SERVICE,
+                new AutenticacaoService(new UsuarioJdbcDAO(connectionFactory))
             );
         }
     }

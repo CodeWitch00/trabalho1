@@ -12,6 +12,7 @@ Aplicacao web funcional para biblioteca, integrando:
 - camada Service para regras de negocio;
 - camada DAO/JDBC para acesso ao banco;
 - persistencia em PostgreSQL.
+- autenticacao por sessao e perfis `ADMIN` e `USUARIO`.
 
 ## Tecnologias
 
@@ -117,6 +118,10 @@ Depois acesse:
 http://localhost:8080/biblioteca/livros
 ```
 
+Os dados iniciais incluem `admin@boaleitura.local` e `usuario@boaleitura.local`.
+Ambos usam a senha local `password`, armazenada no banco exclusivamente como
+hash PBKDF2-HMAC-SHA-256. Troque ou remova essas contas antes de publicar.
+
 Para encerrar, pressione `Ctrl+C` no terminal em que o script esta rodando. O
 banco temporario e os arquivos temporarios do Tomcat serao removidos
 automaticamente.
@@ -156,6 +161,10 @@ Para carregar os dados iniciais de exemplo com
 ```bash
 psql -h HOST -U USUARIO_DO_BANCO -d NOME_DO_BANCO -f database/dados-iniciais.sql
 ```
+
+Em uma base existente, não execute novamente o schema completo: aplique
+`database/migracoes/001_usuarios_e_seguranca.sql` e cadastre os usuários com
+hash PBKDF2-HMAC-SHA-256 gerado pela aplicação.
 
 No Supabase, os mesmos scripts podem ser executados pelo SQL Editor do painel.
 
@@ -252,6 +261,8 @@ Essa tarefa exige `.env` configurado na raiz do repositorio. Use
 ## Rotas do CRUD de livros
 
 ```text
+GET/POST /login
+POST     /logout
 GET  /livros
 GET  /livros/novo
 POST /livros

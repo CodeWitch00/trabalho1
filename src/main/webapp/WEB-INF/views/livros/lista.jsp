@@ -14,11 +14,18 @@
 
     <header class="site-header">
         <div class="site-header__identidade">
+            <div class="marca-parceira" aria-label="Cliente parceiro Boa Leitura"><strong>BL</strong><span>Boa Leitura</span></div>
             <p class="site-header__eyebrow">Biblioteca Municipal Boa Leitura</p>
             <h1>Gestão de livros</h1>
         </div>
         <div class="site-header__acoes">
-            <a class="botao-link botao-link--primario" href="${pageContext.request.contextPath}/livros/novo">Novo livro</a>
+            <span class="usuario-logado">${sessionScope.usuarioAutenticado.nome} (${sessionScope.usuarioAutenticado.perfil})</span>
+            <c:if test="${sessionScope.usuarioAutenticado.administrador}">
+                <a class="botao-link botao-link--primario" href="${pageContext.request.contextPath}/livros/novo">Novo livro</a>
+            </c:if>
+            <form class="form-logout" method="post" action="${pageContext.request.contextPath}/logout">
+                <button type="submit" class="botao-link">Sair</button>
+            </form>
         </div>
     </header>
 
@@ -38,7 +45,7 @@
                 </div>
 
                 <c:if test="${not empty flashMensagem}">
-                    <p class="feedback" data-state="${flashTipo}" role="status">${flashMensagem}</p>
+                    <p class="feedback" data-state="${flashTipo}" role="status"><c:out value="${flashMensagem}" /></p>
                 </c:if>
 
                 <form class="busca" method="get" action="${pageContext.request.contextPath}/livros">
@@ -64,15 +71,15 @@
                                 <th scope="col">Ano</th>
                                 <th scope="col">Exemplares</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Ações</th>
+                                <c:if test="${sessionScope.usuarioAutenticado.administrador}"><th scope="col">Ações</th></c:if>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="livro" items="${livros}">
                                 <tr>
-                                    <td data-label="Título">${livro.titulo}</td>
-                                    <td data-label="Autor(a)">${livro.autor}</td>
-                                    <td data-label="Categoria">${livro.categoria}</td>
+                                    <td data-label="Título"><c:out value="${livro.titulo}" /></td>
+                                    <td data-label="Autor(a)"><c:out value="${livro.autor}" /></td>
+                                    <td data-label="Categoria"><c:out value="${livro.categoria}" /></td>
                                     <td data-label="ISBN"><c:out value="${empty livro.isbn ? '-' : livro.isbn}" /></td>
                                     <td data-label="Ano">${livro.anoPublicacao}</td>
                                     <td data-label="Exemplares">${livro.quantidadeExemplares}</td>
@@ -81,15 +88,18 @@
                                             ${livro.status.descricao}
                                         </span>
                                     </td>
-                                    <td data-label="Ações">
-                                        <div class="acoes-tabela">
-                                            <a class="botao-link" href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}">Editar</a>
-                                            <form method="post" action="${pageContext.request.contextPath}/livros/excluir" onsubmit="return confirm('Deseja excluir este livro?');">
-                                                <input type="hidden" name="id" value="${livro.id}">
-                                                <button class="botao-perigo" type="submit">Excluir</button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    <c:if test="${sessionScope.usuarioAutenticado.administrador}">
+                                        <td data-label="Ações">
+                                            <div class="acoes-tabela">
+                                                <a class="botao-link" href="${pageContext.request.contextPath}/livros/editar?id=${livro.id}">Editar</a>
+                                                <form method="post" action="${pageContext.request.contextPath}/livros/excluir" onsubmit="return confirm('Deseja excluir este livro?');">
+                                                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
+                                                    <input type="hidden" name="id" value="${livro.id}">
+                                                    <button class="botao-perigo" type="submit">Excluir</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>

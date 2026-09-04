@@ -341,6 +341,95 @@ main {
     border-color: var(--color-red);
 }
 
+/* Identidade do parceiro e área autenticada. */
+.marca-parceira {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.marca-parceira strong {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    background-color: var(--color-red);
+    color: #ffffff;
+}
+
+.marca-parceira span {
+    font-size: 0.9rem;
+}
+
+.site-header__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.usuario-logado {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+.form-logout {
+    margin: 0;
+}
+
+.form-logout .botao-link {
+    min-height: auto;
+    cursor: pointer;
+}
+
+.pagina-login {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: var(--space-md);
+}
+
+.login-principal {
+    width: min(100%, 28rem);
+    padding: 0;
+}
+
+.login-painel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 4px solid var(--color-primary);
+    border-radius: var(--radius);
+    padding: var(--space-xl);
+}
+
+.login-painel h1 {
+    margin-bottom: var(--space-lg);
+}
+
+@media (max-width: 560px) {
+    .site-header {
+        align-items: flex-start;
+    }
+
+    .site-header__acoes {
+        width: 100%;
+    }
+
+    .usuario-logado {
+        width: 100%;
+    }
+
+    .login-painel {
+        padding: var(--space-lg);
+    }
+}
+
 /* ==========================================================================
    7. FORMULÁRIO
    ========================================================================== */
